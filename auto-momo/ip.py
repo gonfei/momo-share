@@ -69,6 +69,7 @@ async def get_page(url, session, mod=0):
     hd = await getheaders()
     try:
         async with await session.get(url=url, headers=hd, timeout=tout) as response:
+            await asyncio.sleep(2)
             page_source = await response.text()
             await soup_page(page_source, mod=mod)
     except Exception as e:
