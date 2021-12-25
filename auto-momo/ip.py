@@ -41,6 +41,9 @@ async def taskList(ss):
         asyncio.create_task(get_page('https://www.kuaidaili.com/free/inha/1/', mod=2, session=ss)),
         asyncio.create_task(get_page('https://www.kuaidaili.com/free/intr/2/', mod=2, session=ss)),
         asyncio.create_task(get_page('https://www.proxy-list.download/api/v1/get?type=http', mod=3, session=ss)),
+        asyncio.create_task(get_page('http://www.66ip.cn/areaindex_1/1.html', session=ss)),
+        asyncio.create_task(get_page('http://www.66ip.cn/areaindex_5/1.html', session=ss)),
+        asyncio.create_task(get_page('http://www.66ip.cn/areaindex_14/1.html', session=ss)),
     ]
 
     for i in range(1, 4):
@@ -55,7 +58,7 @@ async def taskList(ss):
 
 # 实例化请求对象
 async def create_aiohttp_ip():
-    async with ClientSession(connector=TCPConnector(ssl=False, limit=2)) as session:
+    async with ClientSession(connector=TCPConnector(ssl=False, limit_per_host=1)) as session:
         task = await taskList(session)
         await asyncio.wait(task)
 
