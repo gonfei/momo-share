@@ -49,6 +49,7 @@ async def taskList(ss):
     for i in range(1, 4):
         task.append(asyncio.create_task(get_page(f'http://www.nimadaili.com/http/{i}/', mod=4, session=ss)))
         task.append(asyncio.create_task(get_page(f'https://www.89ip.cn/index_{i}.html', session=ss)))
+        task.append(asyncio.create_task(get_page(f'https://www.89ip.cn/index_{i}.html', session=ss)))
         task.append(asyncio.create_task(get_page(f'http://http.taiyangruanjian.com/free/page{i}/', mod=1, session=ss)))
         task.append(asyncio.create_task(get_page(f'http://www.kxdaili.com/dailiip/1/{i}.html', session=ss)))
         task.append(asyncio.create_task(get_page(f'http://www.ip3366.net/free/?stype=1&page={i}', session=ss)))
@@ -58,14 +59,14 @@ async def taskList(ss):
 
 # 实例化请求对象
 async def create_aiohttp_ip():
-    async with ClientSession(connector=TCPConnector(ssl=False, limit_per_host=1)) as session:
+    async with ClientSession(connector=TCPConnector(ssl=False)) as session:
         task = await taskList(session)
         await asyncio.wait(task)
 
 
 # 访问网页
 async def get_page(url, session, mod=0):
-    tout = ClientTimeout(total=30)
+    tout = ClientTimeout(total=20)
     hd = await getheaders()
     try:
         async with asyncio.Semaphore(1):
@@ -74,6 +75,8 @@ async def get_page(url, session, mod=0):
                 await soup_page(page_source, mod=mod)
     except Exception as e:
         print(f"['{url}']抓取失败:", e)
+    finally:
+        response.close()
 
 
 async def soup_page(source, mod):
