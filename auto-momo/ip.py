@@ -73,10 +73,9 @@ async def get_page(url, session, mod=0):
             async with await session.get(url=url, headers=hd, timeout=tout) as response:
                 page_source = await response.text()
                 await soup_page(page_source, mod=mod)
+                response.close()
     except Exception as e:
         print(f"['{url}']抓取失败:", e)
-    finally:
-        response.close()
 
 
 async def soup_page(source, mod):
