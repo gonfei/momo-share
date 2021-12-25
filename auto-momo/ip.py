@@ -65,10 +65,10 @@ async def get_page(url, session, mod=0):
     tout = ClientTimeout(total=30)
     hd = await getheaders()
     try:
-        async with await session.get(url=url, headers=hd, timeout=tout) as response:
-            await asyncio.sleep(2)
-            page_source = await response.text()
-            await soup_page(page_source, mod=mod)
+        async with asyncio.Semaphore(1):
+            async with await session.get(url=url, headers=hd, timeout=tout) as response:
+                page_source = await response.text()
+                await soup_page(page_source, mod=mod)
     except Exception as e:
         print(f"['{url}']抓取失败:", e)
 
