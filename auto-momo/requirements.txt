@@ -1,4 +1,2 @@
 aiohttp
-uvloop
-BeautifulSoup4
 lxml
