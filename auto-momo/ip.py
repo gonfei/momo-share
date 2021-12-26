@@ -65,11 +65,10 @@ async def get_page(url, session, mod=0):
     tout = ClientTimeout(total=30)
     hd = await getheaders()
     try:
-        async with asyncio.Semaphore(1):
-            async with await session.get(url=url, headers=hd, timeout=tout) as response:
-                page_source = await response.text()
-                await soup_page(page_source, mod=mod)
-                response.close()
+        async with await session.get(url=url, headers=hd, timeout=tout) as response:
+            page_source = await response.text()
+            await soup_page(page_source, mod=mod)
+            response.close()
     except Exception as e:
         print(f"['{url}']抓取失败:", e)
 
@@ -123,5 +122,5 @@ async def soup_page(source, mod):
 def ip_main():
     asyncio.run(create_aiohttp_ip())
     global listIP
-    listIP = list(set(listIP)) # 代理去重
+    listIP = list(set(listIP))  # 代理去重
     print(f"代理ip抓取完成,共{len(listIP)}个可用代理ip地址。")
