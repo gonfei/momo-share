@@ -55,7 +55,7 @@ async def taskList(ss):
 
 # 实例化请求对象
 async def create_aiohttp_ip():
-    async with ClientSession(connector=TCPConnector(ssl=False, limit=3)) as session:
+    async with ClientSession(connector=TCPConnector(ssl=False)) as session:
         task = await taskList(session)
         await asyncio.wait(task)
 
