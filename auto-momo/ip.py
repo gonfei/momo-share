@@ -122,4 +122,6 @@ async def soup_page(source, mod):
 
 def ip_main():
     asyncio.run(create_aiohttp_ip())
+    global listIP
+    listIP = list(set(listIP)) # 代理去重
     print(f"代理ip抓取完成,共{len(listIP)}个可用代理ip地址。")
