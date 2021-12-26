@@ -62,7 +62,7 @@ async def create_aiohttp_ip():
 
 # 访问网页
 async def get_page(url, session, mod=0):
-    tout = ClientTimeout(total=30)
+    tout = ClientTimeout(total=20)
     hd = await getheaders()
     try:
         async with await session.get(url=url, headers=hd, timeout=tout) as response:
