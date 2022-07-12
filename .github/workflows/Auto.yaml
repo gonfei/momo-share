@@ -3,7 +3,7 @@ name: momo
 # Controls when the action will run.
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 0/30 0/1 * * ? '
     # 更改执行时间/次数 具体可以百度 cron 的配置进行更改 
   workflow_dispatch:
 
